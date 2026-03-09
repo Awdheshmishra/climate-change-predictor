@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { FaPaperPlane, FaRobot } from 'react-icons/fa';
 
-const HinglishChatbot = () => {
+const HinglishChatbot = ({ API_URL }) => {
   const [messages, setMessages] = useState([
     { 
       sender: 'bot', 
@@ -48,7 +48,7 @@ const HinglishChatbot = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/chat', {
+      const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: input })
@@ -66,7 +66,7 @@ const HinglishChatbot = () => {
     } catch (error) {
       const errorMsg = {
         sender: 'bot',
-        text: '⚠️ Backend se connect nahi ho pa raha.\n\nPlease check karo:\n1. Backend chal raha hai (port 8000)\n2. Terminal mein: python simple_main.py run karo',
+        text: '⚠️ Backend se connect nahi ho pa raha.\n\nPlease check karo:\n1. Backend chal raha hai\n2. Internet connection check karo',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMsg]);

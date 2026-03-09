@@ -88,7 +88,7 @@ const internationalCities = [
   { value: 'tehran', name: 'Tehran, Iran', emoji: '🕌', temp: 17.5, aqi: 175, rainfall: 230 }
 ];
 
-const CitySelector = ({ onSelectCity, selectedCity }) => {
+const CitySelector = ({ onSelectCity, selectedCity, API_URL }) => {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
@@ -98,29 +98,10 @@ const CitySelector = ({ onSelectCity, selectedCity }) => {
 
     setLoading(true);
     try {
-      // For demo, create prediction from static data
-      const allCities = [...indianStates, ...internationalCities];
-      const cityData = allCities.find(c => c.value === cityValue);
-      
-      if (cityData) {
-        const pred = {
-          city: cityData.name,
-          current: {
-            temperature: cityData.temp,
-            aqi: cityData.aqi,
-            rainfall_mm: cityData.rainfall
-          },
-          prediction_2050: {
-            temperature: (cityData.temp + 2.5).toFixed(1),
-            aqi: Math.min(cityData.aqi + 100, 500),
-            rainfall_mm: Math.max(cityData.rainfall - 150, 400),
-            increase: 2.5
-          },
-          recommendations: getRecommendations(cityValue, type)
-        };
-        setPrediction(pred);
-        onSelectCity(pred);
-      }
+      const response = await fetch(`${API_URL}/api/city/${cityValue}/quick`);
+      const data = await response.json();
+      setPrediction(data);
+      onSelectCity(data);
     } catch (error) {
       console.error('Error:', error);
     }
