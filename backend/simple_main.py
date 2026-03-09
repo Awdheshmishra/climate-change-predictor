@@ -2,12 +2,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
+import os
 
 app = FastAPI()
 
+# Allow frontend requests (important for deployment)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -15,6 +17,15 @@ app.add_middleware(
 
 class ChatRequest(BaseModel):
     message: str
+
+
+@app.get("/")
+async def root():
+    return {
+        "message": "🌍 Climate Intelligence Hub API",
+        "status": "Running"
+    }
+
 
 @app.get("/api/climate-data")
 async def get_climate_data():
@@ -28,149 +39,73 @@ async def get_climate_data():
         "co2_levels": [338 + (i * 1.8) for i in range(45)]
     }
 
-@app.get("/api/city/{city_name}/quick")
-async def get_city(city_name: str):
-    cities = {
-        "lucknow": {
-            "city": "Lucknow",
-            "current": {"temperature": 25.8, "aqi": 210, "rainfall_mm": 850},
-            "prediction_2050": {"temperature": 28.5, "aqi": 340, "rainfall_mm": 780, "increase": 2.7},
-            "recommendations": ["🌳 Tree plantation karo", "💧 Water conservation", "🚲 Public transport use karo", "🏭 Pollution control"]
-        },
-        "delhi": {
-            "city": "Delhi",
-            "current": {"temperature": 26.5, "aqi": 320, "rainfall_mm": 780},
-            "prediction_2050": {"temperature": 29.8, "aqi": 450, "rainfall_mm": 700, "increase": 3.3},
-            "recommendations": ["🚗 Odd-even scheme lagao", "🌫️ Air purifiers use karo", "🌳 Green cover badhao", "🏗️ Dust control karo"]
-        },
-        "mumbai": {
-            "city": "Mumbai",
-            "current": {"temperature": 28.3, "aqi": 180, "rainfall_mm": 2200},
-            "prediction_2050": {"temperature": 30.5, "aqi": 250, "rainfall_mm": 2000, "increase": 2.2},
-            "recommendations": ["🌊 Coastal protection karo", "🏙️ Vertical gardens lagao", "♻️ Waste management improve karo", "🚇 Public transport badhao"]
-        },
-        "kolkata": {
-            "city": "Kolkata",
-            "current": {"temperature": 27.8, "aqi": 195, "rainfall_mm": 1580},
-            "prediction_2050": {"temperature": 30.2, "aqi": 280, "rainfall_mm": 1450, "increase": 2.4},
-            "recommendations": ["🌳 Parks bachao", "💧 Water logging solution", "🏭 Emissions control", "🚲 Cycle lanes banao"]
-        },
-        "bangalore": {
-            "city": "Bangalore",
-            "current": {"temperature": 24.5, "aqi": 145, "rainfall_mm": 970},
-            "prediction_2050": {"temperature": 27.0, "aqi": 200, "rainfall_mm": 880, "increase": 2.5},
-            "recommendations": ["🌳 Lake conservation", "🏗️ Construction roko", "💧 Rainwater harvesting", "🌿 Green city banao"]
-        }
-    }
-    return cities.get(city_name.lower(), cities["lucknow"])
 
 @app.post("/api/chat")
 async def chat(request: ChatRequest):
+
     message = request.message.lower()
-    
+
     if "lucknow" in message:
-        response = """🏙️ **Lucknow ka Climate Prediction:**
+        response = """🏙️ Lucknow Climate
 
-📊 Current Temp: 25.8°C
-🔮 2050 tak: 28.5°C
-📈 Increase: +2.7°C
+Current Temp: 25.8°C  
+2050 Prediction: 28.5°C  
 
-⚠️ Temperature badh raha hai!
+Suggestions:
+• Tree plantation badhao  
+• Gomti river clean rakho  
+• Metro aur public transport use karo
+"""
 
-💡 Suggestions:
-• Tree plantation badhao
-• Gomti river clean karo
-• Metro use badhao"""
-    
     elif "delhi" in message:
-        response = """🏙️ **Delhi ka Climate Prediction:**
+        response = """🏙️ Delhi Climate
 
-📊 Current Temp: 26.5°C
-🔮 2050 tak: 29.8°C
-📈 Increase: +3.3°C
+Current Temp: 26.5°C  
+2050 Prediction: 29.8°C  
 
-⚠️ Sabse zyada risk!
+Suggestions:
+• Odd-even traffic  
+• Pollution control  
+• Green cover badhao
+"""
 
-💡 Suggestions:
-• Odd-even scheme lagao
-• Air purifiers use karo
-• Green cover badhao"""
-    
     elif "mumbai" in message:
-        response = """🏙️ **Mumbai ka Climate Prediction:**
+        response = """🏙️ Mumbai Climate
 
-📊 Current Temp: 28.3°C
-🔮 2050 tak: 30.5°C
-📈 Increase: +2.2°C
+Current Temp: 28.3°C  
+2050 Prediction: 30.5°C  
 
-🌊 Sea level rise ka risk!
+Risk: Sea level rise
+"""
 
-💡 Suggestions:
-• Coastal protection karo
-• Vertical gardens lagao
-• Waste management improve karo"""
-    
-    elif "temp" in message or "temperature" in message:
-        response = """🌡️ **Global Temperature:**
+    elif "temperature" in message or "temp" in message:
+        response = """🌡️ Global Temperature
 
-📊 Current (2024): 15.14°C
-🔮 2050 Prediction: 16.50°C
-📈 Total Rise: +1.36°C
+Current: 15.14°C  
+2050 Prediction: 16.50°C  
 
-⚠️ Paris Agreement target: <1.5°C"""
-    
-    elif "carbon" in message or "emission" in message:
-        response = """🏭 **Carbon Emissions:**
+Paris Agreement target < 1.5°C"""
 
-📊 Current CO₂: 420 ppm
-📈 Pre-industrial: 280 ppm
-
-🎯 Target:
-• 2030 tak 45% reduction
-• 2050 tak Carbon Neutrality"""
-    
-    elif "2050" in message or "future" in message:
-        response = """🔮 **2050 Tak Ka Scenario:**
-
-🌡️ Temperature: 1.5-3°C increase
-🌊 Sea Level: 30-50cm rise
-💧 Water Scarcity: Badh jayegi
-
-✅ Action lo toh bach sakte hain!"""
-    
-    elif "help" in message or "madad" in message:
-        response = """🤖 **Main kaise help karu:**
-
-1️⃣ City prediction: "Lucknow temp"
-2️⃣ Global info: "Temperature kya hai"
-3️⃣ Solutions: "Kya kar sakte hain"
-
-Kya janna hai?"""
-    
     else:
-        response = """🤔 Samajh nahi aaya bhai.
+        response = """🤖 Aap ye try kar sakte ho:
 
-Try karo:
-• "Lucknow climate"
-• "Delhi temperature"
-• "2050 kya hoga"
-• "Help" """
-    
-    return {"response": response, "language": "hinglish"}
+• Lucknow temperature  
+• Delhi climate  
+• Mumbai prediction  
+• 2050 kya hoga
+"""
+
+    return {"response": response}
+
 
 @app.get("/api/cities")
 async def get_cities():
-    return {"cities": ["lucknow", "delhi", "mumbai", "kolkata", "bangalore"], "count": 5}
-
-@app.get("/")
-async def root():
-    return {"message": "🌍 Climate Intelligence Hub API", "status": "Running"}
-@app.route("/")
-def home():
-    return {"message": "Climate backend running"}
-
+    return {
+        "cities": ["lucknow", "delhi", "mumbai", "kolkata", "bangalore"],
+        "count": 5
+    }
 
 
 if __name__ == "__main__":
-    print("🚀 Backend starting on http://localhost:8000")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
