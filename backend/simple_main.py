@@ -165,6 +165,9 @@ async def get_cities():
 @app.get("/")
 async def root():
     return {"message": "🌍 Climate Intelligence Hub API", "status": "Running"}
+@app.route("/")
+def home():
+    return {"message": "Climate backend running"}
 
 if __name__ == "__main__":
     print("🚀 Backend starting on http://localhost:8000")
