@@ -12,31 +12,76 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel,
-  Icon
 } from '@chakra-ui/react';
-import { FaMapMarkerAlt } from 'react-icons/fa';
 
 const indianStates = [
-  { value: 'delhi', name: 'Delhi', emoji: '🏛️', temp: 26.5, aqi: 320, rainfall: 780 },
-  { value: 'mumbai', name: 'Mumbai, Maharashtra', emoji: '🌊', temp: 28.3, aqi: 180, rainfall: 2200 },
-  { value: 'kolkata', name: 'Kolkata, West Bengal', emoji: '🏙️', temp: 27.8, aqi: 195, rainfall: 1580 },
-  { value: 'chennai', name: 'Chennai, Tamil Nadu', emoji: '🏖️', temp: 29.5, aqi: 165, rainfall: 1400 },
-  { value: 'bangalore', name: 'Bangalore, Karnataka', emoji: '💻', temp: 24.5, aqi: 145, rainfall: 970 },
-  { value: 'hyderabad', name: 'Hyderabad, Telangana', emoji: '🕌', temp: 28.0, aqi: 175, rainfall: 850 },
-  { value: 'pune', name: 'Pune, Maharashtra', emoji: '🎓', temp: 25.5, aqi: 160, rainfall: 750 },
-  { value: 'ahmedabad', name: 'Ahmedabad, Gujarat', emoji: '🏭', temp: 28.5, aqi: 210, rainfall: 650 },
-  { value: 'jaipur', name: 'Jaipur, Rajasthan', emoji: '🏰', temp: 27.5, aqi: 195, rainfall: 550 },
-  { value: 'lucknow', name: 'Lucknow, Uttar Pradesh', emoji: '🌳', temp: 25.8, aqi: 210, rainfall: 850 }
+  { value: 'delhi', name: 'Delhi 🏛️' },
+  { value: 'mumbai', name: 'Mumbai, Maharashtra 🌊' },
+  { value: 'kolkata', name: 'Kolkata, West Bengal 🏙️' },
+  { value: 'chennai', name: 'Chennai, Tamil Nadu 🏖️' },
+  { value: 'bangalore', name: 'Bangalore, Karnataka 💻' },
+  { value: 'hyderabad', name: 'Hyderabad, Telangana 🕌' },
+  { value: 'pune', name: 'Pune, Maharashtra 🎓' },
+  { value: 'ahmedabad', name: 'Ahmedabad, Gujarat 🏭' },
+  { value: 'jaipur', name: 'Jaipur, Rajasthan 🏰' },
+  { value: 'lucknow', name: 'Lucknow, Uttar Pradesh 🌳' },
+  { value: 'kanpur', name: 'Kanpur, UP 🏭' },
+  { value: 'nagpur', name: 'Nagpur, Maharashtra 🍊' },
+  { value: 'indore', name: 'Indore, MP 🏆' },
+  { value: 'bhopal', name: 'Bhopal, MP 🕌' },
+  { value: 'patna', name: 'Patna, Bihar 📚' },
+  { value: 'vadodara', name: 'Vadodara, Gujarat 🎭' },
+  { value: 'ghaziabad', name: 'Ghaziabad, UP 🏭' },
+  { value: 'ludhiana', name: 'Ludhiana, Punjab 🌾' },
+  { value: 'agra', name: 'Agra, UP 🕌' },
+  { value: 'nashik', name: 'Nashik, Maharashtra 🍇' },
+  { value: 'faridabad', name: 'Faridabad, Haryana 🏭' },
+  { value: 'meerut', name: 'Meerut, UP 🏭' },
+  { value: 'rajkot', name: 'Rajkot, Gujarat 🦁' },
+  { value: 'kalyan', name: 'Kalyan, Maharashtra 🏘️' },
+  { value: 'thane', name: 'Thane, Maharashtra 🏙️' },
+  { value: 'varanasi', name: 'Varanasi, UP 🕉️' },
+  { value: 'srinagar', name: 'Srinagar, J&K 🏔️' },
+  { value: 'chandigarh', name: 'Chandigarh 🌳' },
+  { value: 'coimbatore', name: 'Coimbatore, TN 🏭' },
+  { value: 'kochi', name: 'Kochi, Kerala 🌴' },
+  { value: 'thiruvananthapuram', name: 'Trivandrum, Kerala 🏛️' },
+  { value: 'guwahati', name: 'Guwahati, Assam 🍵' },
+  { value: 'bhubaneswar', name: 'Bhubaneswar, Odisha 🛕' },
+  { value: 'ranchi', name: 'Ranchi, Jharkhand 🏞️' },
+  { value: 'raipur', name: 'Raipur, Chhattisgarh 🌾' },
+  { value: 'dehradun', name: 'Dehradun, Uttarakhand 🏔️' },
+  { value: 'shimla', name: 'Shimla, HP 🏔️' },
+  { value: 'gangtok', name: 'Gangtok, Sikkim 🏔️' },
+  { value: 'imphal', name: 'Imphal, Manipur 🌸' },
+  { value: 'agartala', name: 'Agartala, Tripura 🌳' }
 ];
 
 const internationalCities = [
-  { value: 'newyork', name: 'New York, USA', emoji: '🗽', temp: 13.0, aqi: 65, rainfall: 1200 },
-  { value: 'london', name: 'London, UK', emoji: '🎡', temp: 11.5, aqi: 55, rainfall: 750 },
-  { value: 'paris', name: 'Paris, France', emoji: '🗼', temp: 12.5, aqi: 60, rainfall: 650 },
-  { value: 'tokyo', name: 'Tokyo, Japan', emoji: '🗾', temp: 16.0, aqi: 45, rainfall: 1530 },
-  { value: 'dubai', name: 'Dubai, UAE', emoji: '🏙️', temp: 33.0, aqi: 145, rainfall: 100 },
-  { value: 'singapore', name: 'Singapore', emoji: '🦁', temp: 28.0, aqi: 55, rainfall: 2340 }
+  { value: 'newyork', name: 'New York, USA 🗽' },
+  { value: 'london', name: 'London, UK 🎡' },
+  { value: 'paris', name: 'Paris, France 🗼' },
+  { value: 'tokyo', name: 'Tokyo, Japan 🗾' },
+  { value: 'beijing', name: 'Beijing, China 🏯' },
+  { value: 'dubai', name: 'Dubai, UAE 🏙️' },
+  { value: 'singapore', name: 'Singapore 🦁' },
+  { value: 'sydney', name: 'Sydney, Australia 🦘' },
+  { value: 'toronto', name: 'Toronto, Canada 🍁' },
+  { value: 'berlin', name: 'Berlin, Germany 🍺' },
+  { value: 'moscow', name: 'Moscow, Russia 🏰' },
+  { value: 'cairo', name: 'Cairo, Egypt 🔺' },
+  { value: 'saopaulo', name: 'São Paulo, Brazil 🇧🇷' },
+  { value: 'mexicocity', name: 'Mexico City, Mexico 🌮' },
+  { value: 'bangkok', name: 'Bangkok, Thailand 🛕' },
+  { value: 'kualalumpur', name: 'Kuala Lumpur, Malaysia 🏙️' },
+  { value: 'jakarta', name: 'Jakarta, Indonesia 🏝️' },
+  { value: 'manila', name: 'Manila, Philippines 🏝️' },
+  { value: 'karachi', name: 'Karachi, Pakistan 🕌' },
+  { value: 'dhaka', name: 'Dhaka, Bangladesh 🇧🇩' },
+  { value: 'colombo', name: 'Colombo, Sri Lanka 🇱🇰' },
+  { value: 'kathmandu', name: 'Kathmandu, Nepal 🏔️' },
+  { value: 'kabul', name: 'Kabul, Afghanistan 🏔️' },
+  { value: 'tehran', name: 'Tehran, Iran 🕌' }
 ];
 
 const CitySelector = ({ API_URL }) => {
@@ -44,21 +89,16 @@ const CitySelector = ({ API_URL }) => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleCityChange = async (cityValue, type) => {
-    if (!cityValue || !API_URL) {
-      console.log('No city value or API URL');
-      return;
-    }
+  const handleCityChange = async (cityValue) => {
+    if (!cityValue || !API_URL) return;
 
     setLoading(true);
     try {
-      console.log('Fetching city data:', cityValue, 'from:', API_URL);
       const response = await fetch(`${API_URL}/api/city/${cityValue}/quick`);
       const data = await response.json();
-      console.log('City data received:', data);
       setPrediction(data);
     } catch (error) {
-      console.error('Error fetching city data:', error);
+      console.error('Error:', error);
     }
     setLoading(false);
   };
@@ -71,90 +111,82 @@ const CitySelector = ({ API_URL }) => {
     return 'purple';
   };
 
-  const getAQILabel = (aqi) => {
-    if (aqi <= 50) return 'Good';
-    if (aqi <= 100) return 'Moderate';
-    if (aqi <= 150) return 'Unhealthy';
-    if (aqi <= 200) return 'Very Unhealthy';
-    return 'Hazardous';
-  };
-
   return (
-    <Box bg="gray.800" p={6} borderRadius="2xl" border="2px" borderColor="purple.500/30" h="full">
-      <Heading size="md" mb={4} color="purple.400" display="flex" alignItems="center">
-        <Icon as={FaMapMarkerAlt} mr={2} />
+    <Box bg="gray.800" p={6} borderRadius="2xl" border="2px" borderColor="purple.500/30">
+      <Heading size="md" mb={4} color="purple.400">
         🌍 City Climate Prediction
       </Heading>
 
       <Tabs index={activeTab} onChange={setActiveTab} variant="enclosed" colorScheme="purple" mb={4}>
         <TabList>
-          <Tab fontSize="sm">🇮🇳 Indian</Tab>
-          <Tab fontSize="sm">🌏 International</Tab>
+          <Tab>🇮🇳 Indian</Tab>
+          <Tab>🌏 International</Tab>
         </TabList>
       </Tabs>
 
       {activeTab === 0 ? (
         <Select
-          placeholder="📍 Select City..."
+          placeholder="📍 Select Indian City..."
           size="md"
           mb={4}
-          onChange={(e) => handleCityChange(e.target.value, 'india')}
+          onChange={(e) => handleCityChange(e.target.value)}
           bg="gray.700"
           borderColor="gray.600"
+          color="white"
+          _hover={{ borderColor: 'purple.400' }}
+          _focus={{ borderColor: 'purple.500' }}
         >
           {indianStates.map(city => (
-            <option key={city.value} value={city.value}>
-              {city.emoji} {city.name}
+            <option key={city.value} value={city.value} style={{ color: 'white' }}>
+              {city.name}
             </option>
           ))}
         </Select>
       ) : (
         <Select
-          placeholder="🌍 Select City..."
+          placeholder="🌍 Select International City..."
           size="md"
           mb={4}
-          onChange={(e) => handleCityChange(e.target.value, 'international')}
+          onChange={(e) => handleCityChange(e.target.value)}
           bg="gray.700"
           borderColor="gray.600"
+          color="white"
+          _hover={{ borderColor: 'purple.400' }}
+          _focus={{ borderColor: 'purple.500' }}
         >
           {internationalCities.map(city => (
-            <option key={city.value} value={city.value}>
-              {city.emoji} {city.name}
+            <option key={city.value} value={city.value} style={{ color: 'white' }}>
+              {city.name}
             </option>
           ))}
         </Select>
       )}
 
-      {loading && (
-        <Box textAlign="center" py={8}>
-          <Spinner size="xl" color="purple.500" />
-          <Text mt={4} color="gray.400">Loading...</Text>
-        </Box>
-      )}
+      {loading && <Spinner size="lg" color="purple.500" />}
 
-      {prediction && !loading && prediction.current && prediction.prediction_2050 && (
+      {prediction && !loading && prediction.current && (
         <VStack spacing={4} align="stretch">
           <Grid templateColumns="1fr 1fr" gap={3}>
             <Box bg="blue.900/30" p={4} borderRadius="xl">
-              <Text color="blue.400" fontSize="xs" mb={1}>CURRENT</Text>
+              <Text color="blue.400" fontSize="xs">CURRENT</Text>
               <Heading size="xl">{prediction.current.temperature}°C</Heading>
             </Box>
             <Box bg="red.900/30" p={4} borderRadius="xl">
-              <Text color="red.400" fontSize="xs" mb={1}>2050</Text>
+              <Text color="red.400" fontSize="xs">2050</Text>
               <Heading size="xl">{prediction.prediction_2050.temperature}°C</Heading>
             </Box>
           </Grid>
 
           <Grid templateColumns="1fr 1fr" gap={3}>
             <Box bg="orange.900/30" p={4} borderRadius="xl">
-              <Text color="orange.400" fontSize="xs" mb={1}>AQI</Text>
+              <Text color="orange.400" fontSize="xs">AQI</Text>
               <Heading size="lg">{prediction.current.aqi}</Heading>
-              <Badge mt={1} colorScheme={getAQIColor(prediction.current.aqi)} fontSize="xs">
-                {getAQILabel(prediction.current.aqi)}
+              <Badge mt={1} colorScheme={getAQIColor(prediction.current.aqi)}>
+                {prediction.current.aqi > 200 ? 'Unhealthy' : 'Moderate'}
               </Badge>
             </Box>
             <Box bg="cyan.900/30" p={4} borderRadius="xl">
-              <Text color="cyan.400" fontSize="xs" mb={1}>RAINFALL</Text>
+              <Text color="cyan.400" fontSize="xs">RAINFALL</Text>
               <Heading size="lg">{prediction.current.rainfall_mm} mm</Heading>
             </Box>
           </Grid>
@@ -170,7 +202,7 @@ const CitySelector = ({ API_URL }) => {
 
       {!prediction && !loading && (
         <Box textAlign="center" py={8} color="gray.500">
-          <Text fontSize="sm">Select a city to view prediction</Text>
+          <Text>Select a city to view prediction</Text>
         </Box>
       )}
     </Box>
