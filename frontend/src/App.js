@@ -40,7 +40,7 @@ function App() {
               bgClip="text"
               fontWeight="bold"
             >
-              🌍 Climate Intelligence Hub
+              🌍 Climate predictor
             </Heading>
             <Text fontSize={{ base: "md", md: "xl" }} color="gray.300" maxW="700px">
               AI-Powered Climate Prediction & Analysis Platform
