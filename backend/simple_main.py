@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel  # Pydantic v1
 from dotenv import load_dotenv
 from groq import Groq
 import uvicorn
@@ -29,8 +29,9 @@ if GROQ_API_KEY:
         print("🤖 Groq AI Connected Successfully! ✅")
     except Exception as e:
         print(f"❌ Groq Connection Error: {e}")
+        groq_client = None
 else:
-    print("⚠️ GROQ_API_KEY not found in .env file")
+    print("⚠️ GROQ_API_KEY not found")
 
 class ChatRequest(BaseModel):
     message: str
