@@ -1,24 +1,6 @@
-# Dependencies
 node_modules/
-frontend/node_modules/
-backend/__pycache__/
-backend/.env
-backend/venv/
-
-# Build files
-frontend/build/
-frontend/dist/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Logs
-*.log
-npm-debug.log*
+.env
+__pycache__/
+*.pyc
+dist/
+build/
