@@ -31,392 +31,65 @@ async def get_climate_data():
 @app.get("/api/city/{city_name}/quick")
 async def get_city(city_name: str):
     cities = {
-        # INDIAN CITIES
         "delhi": {
             "city": "Delhi",
             "current": {"temperature": 26.5, "aqi": 320, "rainfall_mm": 780},
             "prediction_2050": {"temperature": 29.8, "aqi": 450, "rainfall_mm": 700, "increase": 3.3},
-            "recommendations": ["🚗 Odd-even scheme lagao", "🌫️ Air purifiers use karo", "🌳 Green cover badhao"]
+            "recommendations": ["Implement odd-even vehicle scheme", "Use air purifiers indoors", "Increase green cover to 33%", "Control construction dust", "Promote public transport"]
         },
         "mumbai": {
             "city": "Mumbai",
             "current": {"temperature": 28.3, "aqi": 180, "rainfall_mm": 2200},
             "prediction_2050": {"temperature": 30.5, "aqi": 250, "rainfall_mm": 2000, "increase": 2.2},
-            "recommendations": ["🌊 Coastal protection karo", "🏙️ Vertical gardens lagao", "♻️ Waste management improve karo"]
+            "recommendations": ["Protect coastal areas", "Install vertical gardens", "Improve waste management", "Conserve mangroves", "Implement flood control measures"]
         },
         "kolkata": {
             "city": "Kolkata",
             "current": {"temperature": 27.8, "aqi": 195, "rainfall_mm": 1580},
             "prediction_2050": {"temperature": 30.2, "aqi": 280, "rainfall_mm": 1450, "increase": 2.4},
-            "recommendations": ["🌳 Parks bachao", "💧 Water logging solution", "🏭 Emissions control"]
+            "recommendations": ["Preserve parks and green spaces", "Address water logging", "Control industrial emissions", "Create cycling lanes"]
         },
         "chennai": {
             "city": "Chennai",
             "current": {"temperature": 29.5, "aqi": 165, "rainfall_mm": 1400},
             "prediction_2050": {"temperature": 32.0, "aqi": 220, "rainfall_mm": 1300, "increase": 2.5},
-            "recommendations": ["🌊 Coastal protection", "💧 Water conservation", "🌳 Tree plantation"]
+            "recommendations": ["Prioritize water conservation", "Install desalination plants", "Enhance rainwater harvesting", "Protect coastal infrastructure"]
         },
         "bangalore": {
             "city": "Bangalore",
             "current": {"temperature": 24.5, "aqi": 145, "rainfall_mm": 970},
             "prediction_2050": {"temperature": 27.0, "aqi": 200, "rainfall_mm": 880, "increase": 2.5},
-            "recommendations": ["🌳 Lake conservation", "🏗️ Construction roko", "💧 Rainwater harvesting"]
+            "recommendations": ["Conserve lakes", "Stop uncontrolled construction", "Make rainwater harvesting mandatory", "Transform IT city into green city"]
         },
         "hyderabad": {
             "city": "Hyderabad",
             "current": {"temperature": 28.0, "aqi": 175, "rainfall_mm": 850},
             "prediction_2050": {"temperature": 30.5, "aqi": 240, "rainfall_mm": 780, "increase": 2.5},
-            "recommendations": ["🌳 Green cover badhao", "💧 Water conservation", "🚲 Public transport"]
+            "recommendations": ["Increase green cover", "Prioritize water conservation", "Strengthen public transport", "Protect lakes"]
         },
         "pune": {
             "city": "Pune",
             "current": {"temperature": 25.5, "aqi": 160, "rainfall_mm": 750},
             "prediction_2050": {"temperature": 28.0, "aqi": 220, "rainfall_mm": 680, "increase": 2.5},
-            "recommendations": ["🌳 Tree plantation", "🏭 Pollution control", "🚗 EV promote karo"]
+            "recommendations": ["Tree plantation drives", "Control industrial pollution", "Promote electric vehicles", "Preserve green zones"]
         },
         "ahmedabad": {
             "city": "Ahmedabad",
             "current": {"temperature": 28.5, "aqi": 210, "rainfall_mm": 650},
             "prediction_2050": {"temperature": 31.0, "aqi": 280, "rainfall_mm": 580, "increase": 2.5},
-            "recommendations": ["💧 Water conservation", "🌳 Green cover", "🏭 Industrial control"]
+            "recommendations": ["Water conservation critical", "Increase green cover", "Control industrial emissions", "Heat action plan"]
         },
         "jaipur": {
             "city": "Jaipur",
             "current": {"temperature": 27.5, "aqi": 195, "rainfall_mm": 550},
             "prediction_2050": {"temperature": 30.0, "aqi": 260, "rainfall_mm": 480, "increase": 2.5},
-            "recommendations": ["🌳 Tree plantation", "💧 Water harvesting", "🏛️ Heritage protect karo"]
+            "recommendations": ["Tree plantation", "Water harvesting", "Protect heritage sites", "Combat desertification"]
         },
         "lucknow": {
             "city": "Lucknow",
             "current": {"temperature": 25.8, "aqi": 210, "rainfall_mm": 850},
             "prediction_2050": {"temperature": 28.5, "aqi": 340, "rainfall_mm": 780, "increase": 2.7},
-            "recommendations": ["🌳 Tree plantation karo", "💧 Water conservation", "🚲 Public transport use karo"]
-        },
-        "kanpur": {
-            "city": "Kanpur",
-            "current": {"temperature": 26.2, "aqi": 285, "rainfall_mm": 720},
-            "prediction_2050": {"temperature": 29.0, "aqi": 380, "rainfall_mm": 650, "increase": 2.8},
-            "recommendations": ["🏭 Industrial pollution control", "🌳 Green cover", "💧 Water management"]
-        },
-        "nagpur": {
-            "city": "Nagpur",
-            "current": {"temperature": 27.0, "aqi": 175, "rainfall_mm": 1100},
-            "prediction_2050": {"temperature": 29.5, "aqi": 240, "rainfall_mm": 1000, "increase": 2.5},
-            "recommendations": ["🌳 Orange city ko green banao", "💧 Water conservation", "🚗 EV promote karo"]
-        },
-        "indore": {
-            "city": "Indore",
-            "current": {"temperature": 26.0, "aqi": 165, "rainfall_mm": 950},
-            "prediction_2050": {"temperature": 28.5, "aqi": 230, "rainfall_mm": 880, "increase": 2.5},
-            "recommendations": ["♻️ Waste management", "🌳 Clean city maintain karo", "💧 Water conservation"]
-        },
-        "bhopal": {
-            "city": "Bhopal",
-            "current": {"temperature": 25.5, "aqi": 170, "rainfall_mm": 1050},
-            "prediction_2050": {"temperature": 28.0, "aqi": 240, "rainfall_mm": 980, "increase": 2.5},
-            "recommendations": ["🌳 Lakes protect karo", "🏭 Industrial control", "💧 Water management"]
-        },
-        "patna": {
-            "city": "Patna",
-            "current": {"temperature": 26.8, "aqi": 225, "rainfall_mm": 1050},
-            "prediction_2050": {"temperature": 29.5, "aqi": 310, "rainfall_mm": 980, "increase": 2.7},
-            "recommendations": ["💧 Flood control", "🌳 Green cover", "🏭 Pollution control"]
-        },
-        "vadodara": {
-            "city": "Vadodara",
-            "current": {"temperature": 28.0, "aqi": 185, "rainfall_mm": 800},
-            "prediction_2050": {"temperature": 30.5, "aqi": 250, "rainfall_mm": 730, "increase": 2.5},
-            "recommendations": ["🌳 Tree plantation", "🏭 Industrial control", "💧 Water conservation"]
-        },
-        "ghaziabad": {
-            "city": "Ghaziabad",
-            "current": {"temperature": 26.5, "aqi": 295, "rainfall_mm": 700},
-            "prediction_2050": {"temperature": 29.5, "aqi": 400, "rainfall_mm": 630, "increase": 3.0},
-            "recommendations": ["🌳 Green cover badhao", "🏭 Pollution control", "🚗 EV promote karo"]
-        },
-        "ludhiana": {
-            "city": "Ludhiana",
-            "current": {"temperature": 24.5, "aqi": 235, "rainfall_mm": 650},
-            "prediction_2050": {"temperature": 27.0, "aqi": 320, "rainfall_mm": 580, "increase": 2.5},
-            "recommendations": ["🏭 Industrial pollution control", "🌳 Tree plantation", "💧 Water management"]
-        },
-        "agra": {
-            "city": "Agra",
-            "current": {"temperature": 26.5, "aqi": 245, "rainfall_mm": 650},
-            "prediction_2050": {"temperature": 29.0, "aqi": 330, "rainfall_mm": 580, "increase": 2.5},
-            "recommendations": ["🏛️ Heritage protect karo", "🌳 Green cover", "🏭 Pollution control"]
-        },
-        "nashik": {
-            "city": "Nashik",
-            "current": {"temperature": 25.5, "aqi": 155, "rainfall_mm": 750},
-            "prediction_2050": {"temperature": 28.0, "aqi": 220, "rainfall_mm": 680, "increase": 2.5},
-            "recommendations": ["🍇 Wine city ko green banao", "💧 Water conservation", "🌳 Tree plantation"]
-        },
-        "faridabad": {
-            "city": "Faridabad",
-            "current": {"temperature": 26.8, "aqi": 285, "rainfall_mm": 680},
-            "prediction_2050": {"temperature": 29.5, "aqi": 380, "rainfall_mm": 610, "increase": 2.7},
-            "recommendations": ["🏭 Industrial control", "🌳 Green cover", "🚗 EV promote karo"]
-        },
-        "meerut": {
-            "city": "Meerut",
-            "current": {"temperature": 26.2, "aqi": 265, "rainfall_mm": 700},
-            "prediction_2050": {"temperature": 29.0, "aqi": 360, "rainfall_mm": 630, "increase": 2.8},
-            "recommendations": ["🏭 Pollution control", "🌳 Tree plantation", "💧 Water management"]
-        },
-        "rajkot": {
-            "city": "Rajkot",
-            "current": {"temperature": 28.0, "aqi": 175, "rainfall_mm": 650},
-            "prediction_2050": {"temperature": 30.5, "aqi": 240, "rainfall_mm": 580, "increase": 2.5},
-            "recommendations": ["💧 Water conservation", "🌳 Green cover", "🏭 Industrial control"]
-        },
-        "kalyan": {
-            "city": "Kalyan",
-            "current": {"temperature": 28.0, "aqi": 190, "rainfall_mm": 2000},
-            "prediction_2050": {"temperature": 30.5, "aqi": 260, "rainfall_mm": 1850, "increase": 2.5},
-            "recommendations": ["🌳 Tree plantation", "💧 Flood control", "🏘️ Urban planning"]
-        },
-        "thane": {
-            "city": "Thane",
-            "current": {"temperature": 28.2, "aqi": 185, "rainfall_mm": 2100},
-            "prediction_2050": {"temperature": 30.7, "aqi": 255, "rainfall_mm": 1950, "increase": 2.5},
-            "recommendations": ["🌳 Green cover", "💧 Water management", "🏙️ Urban planning"]
-        },
-        "varanasi": {
-            "city": "Varanasi",
-            "current": {"temperature": 26.5, "aqi": 235, "rainfall_mm": 950},
-            "prediction_2050": {"temperature": 29.0, "aqi": 320, "rainfall_mm": 880, "increase": 2.5},
-            "recommendations": ["🕉️ Heritage protect karo", "🌳 Ganga clean karo", "🏭 Pollution control"]
-        },
-        "srinagar": {
-            "city": "Srinagar",
-            "current": {"temperature": 14.5, "aqi": 85, "rainfall_mm": 650},
-            "prediction_2050": {"temperature": 17.5, "aqi": 140, "rainfall_mm": 580, "increase": 3.0},
-            "recommendations": ["🏔️ Environment protect karo", "🌳 Dal lake conserve karo", "❄️ Glacier protect karo"]
-        },
-        "chandigarh": {
-            "city": "Chandigarh",
-            "current": {"temperature": 24.0, "aqi": 165, "rainfall_mm": 850},
-            "prediction_2050": {"temperature": 26.5, "aqi": 230, "rainfall_mm": 780, "increase": 2.5},
-            "recommendations": ["🌳 Planned city maintain karo", "💧 Water conservation", "🏭 Pollution control"]
-        },
-        "coimbatore": {
-            "city": "Coimbatore",
-            "current": {"temperature": 27.5, "aqi": 145, "rainfall_mm": 650},
-            "prediction_2050": {"temperature": 30.0, "aqi": 210, "rainfall_mm": 580, "increase": 2.5},
-            "recommendations": ["🏭 Industrial control", "💧 Water management", "🌳 Green cover"]
-        },
-        "kochi": {
-            "city": "Kochi",
-            "current": {"temperature": 28.5, "aqi": 125, "rainfall_mm": 2800},
-            "prediction_2050": {"temperature": 31.0, "aqi": 190, "rainfall_mm": 2600, "increase": 2.5},
-            "recommendations": ["🌴 Coastal protection", "💧 Flood control", "🌳 Mangrove conserve karo"]
-        },
-        "thiruvananthapuram": {
-            "city": "Trivandrum",
-            "current": {"temperature": 28.0, "aqi": 115, "rainfall_mm": 2500},
-            "prediction_2050": {"temperature": 30.5, "aqi": 180, "rainfall_mm": 2300, "increase": 2.5},
-            "recommendations": ["🏛️ Heritage protect karo", "🌊 Coastal protection", "💧 Water management"]
-        },
-        "guwahati": {
-            "city": "Guwahati",
-            "current": {"temperature": 25.5, "aqi": 155, "rainfall_mm": 1700},
-            "prediction_2050": {"temperature": 28.0, "aqi": 220, "rainfall_mm": 1550, "increase": 2.5},
-            "recommendations": ["🍵 Tea gardens protect karo", "🌳 Green cover", "💧 Flood control"]
-        },
-        "bhubaneswar": {
-            "city": "Bhubaneswar",
-            "current": {"temperature": 28.0, "aqi": 165, "rainfall_mm": 1550},
-            "prediction_2050": {"temperature": 30.5, "aqi": 230, "rainfall_mm": 1400, "increase": 2.5},
-            "recommendations": ["🛕 Heritage protect karo", "🌳 Green cover", "💧 Water management"]
-        },
-        "ranchi": {
-            "city": "Ranchi",
-            "current": {"temperature": 24.5, "aqi": 145, "rainfall_mm": 1400},
-            "prediction_2050": {"temperature": 27.0, "aqi": 210, "rainfall_mm": 1280, "increase": 2.5},
-            "recommendations": ["🏞️ Nature protect karo", "🌳 Green cover", "💧 Water conservation"]
-        },
-        "raipur": {
-            "city": "Raipur",
-            "current": {"temperature": 26.5, "aqi": 175, "rainfall_mm": 1300},
-            "prediction_2050": {"temperature": 29.0, "aqi": 240, "rainfall_mm": 1180, "increase": 2.5},
-            "recommendations": ["🌾 Agriculture protect karo", "🌳 Green cover", "💧 Water management"]
-        },
-        "dehradun": {
-            "city": "Dehradun",
-            "current": {"temperature": 20.5, "aqi": 125, "rainfall_mm": 1350},
-            "prediction_2050": {"temperature": 23.5, "aqi": 190, "rainfall_mm": 1220, "increase": 3.0},
-            "recommendations": ["🏔️ Hills protect karo", "🌳 Green cover", "❄️ Environment conserve karo"]
-        },
-        "shimla": {
-            "city": "Shimla",
-            "current": {"temperature": 16.5, "aqi": 75, "rainfall_mm": 1100},
-            "prediction_2050": {"temperature": 19.5, "aqi": 130, "rainfall_mm": 980, "increase": 3.0},
-            "recommendations": ["🏔️ Hills protect karo", "❄️ Snow conserve karo", "🌳 Green cover"]
-        },
-        "gangtok": {
-            "city": "Gangtok",
-            "current": {"temperature": 16.0, "aqi": 65, "rainfall_mm": 2500},
-            "prediction_2050": {"temperature": 19.0, "aqi": 120, "rainfall_mm": 2300, "increase": 3.0},
-            "recommendations": ["🏔️ Mountains protect karo", "🌳 Green cover", "❄️ Environment conserve karo"]
-        },
-        "imphal": {
-            "city": "Imphal",
-            "current": {"temperature": 22.5, "aqi": 95, "rainfall_mm": 1400},
-            "prediction_2050": {"temperature": 25.0, "aqi": 160, "rainfall_mm": 1280, "increase": 2.5},
-            "recommendations": ["🌸 Nature protect karo", "🌳 Green cover", "💧 Water management"]
-        },
-        "agartala": {
-            "city": "Agartala",
-            "current": {"temperature": 25.5, "aqi": 115, "rainfall_mm": 2100},
-            "prediction_2050": {"temperature": 28.0, "aqi": 180, "rainfall_mm": 1950, "increase": 2.5},
-            "recommendations": ["🌳 Green cover", "💧 Water management", "🏞️ Nature conserve karo"]
-        },
-        
-        # INTERNATIONAL CITIES
-        "newyork": {
-            "city": "New York",
-            "current": {"temperature": 13.0, "aqi": 65, "rainfall_mm": 1200},
-            "prediction_2050": {"temperature": 16.0, "aqi": 120, "rainfall_mm": 1100, "increase": 3.0},
-            "recommendations": ["🗽 City infrastructure protect karo", "🌳 Green cover", "💧 Flood control"]
-        },
-        "london": {
-            "city": "London",
-            "current": {"temperature": 11.5, "aqi": 55, "rainfall_mm": 750},
-            "prediction_2050": {"temperature": 14.5, "aqi": 110, "rainfall_mm": 680, "increase": 3.0},
-            "recommendations": ["🎡 Heritage protect karo", "🌳 Green cover", "💧 Water management"]
-        },
-        "paris": {
-            "city": "Paris",
-            "current": {"temperature": 12.5, "aqi": 60, "rainfall_mm": 650},
-            "prediction_2050": {"temperature": 15.5, "aqi": 115, "rainfall_mm": 580, "increase": 3.0},
-            "recommendations": ["🗼 Heritage protect karo", "🌳 Green cover", "🏭 Pollution control"]
-        },
-        "tokyo": {
-            "city": "Tokyo",
-            "current": {"temperature": 16.0, "aqi": 45, "rainfall_mm": 1530},
-            "prediction_2050": {"temperature": 19.0, "aqi": 100, "rainfall_mm": 1400, "increase": 3.0},
-            "recommendations": ["🗾 Technology use karo", "🌳 Green cover", "💧 Flood control"]
-        },
-        "beijing": {
-            "city": "Beijing",
-            "current": {"temperature": 13.0, "aqi": 185, "rainfall_mm": 585},
-            "prediction_2050": {"temperature": 16.0, "aqi": 250, "rainfall_mm": 520, "increase": 3.0},
-            "recommendations": ["🏯 Air quality improve karo", "🌳 Green cover", "🏭 Pollution control"]
-        },
-        "dubai": {
-            "city": "Dubai",
-            "current": {"temperature": 33.0, "aqi": 145, "rainfall_mm": 100},
-            "prediction_2050": {"temperature": 36.5, "aqi": 210, "rainfall_mm": 80, "increase": 3.5},
-            "recommendations": ["🏙️ Cooling technology use karo", "💧 Water conservation", "🌳 Green buildings"]
-        },
-        "singapore": {
-            "city": "Singapore",
-            "current": {"temperature": 28.0, "aqi": 55, "rainfall_mm": 2340},
-            "prediction_2050": {"temperature": 31.0, "aqi": 110, "rainfall_mm": 2150, "increase": 3.0},
-            "recommendations": ["🦁 Green city maintain karo", "💧 Flood control", "🌳 Urban gardens"]
-        },
-        "sydney": {
-            "city": "Sydney",
-            "current": {"temperature": 19.0, "aqi": 35, "rainfall_mm": 1210},
-            "prediction_2050": {"temperature": 22.0, "aqi": 90, "rainfall_mm": 1100, "increase": 3.0},
-            "recommendations": ["🦘 Nature protect karo", "🌊 Coastal protection", "🌳 Green cover"]
-        },
-        "toronto": {
-            "city": "Toronto",
-            "current": {"temperature": 9.5, "aqi": 45, "rainfall_mm": 830},
-            "prediction_2050": {"temperature": 13.0, "aqi": 100, "rainfall_mm": 750, "increase": 3.5},
-            "recommendations": ["🍁 Green cover maintain karo", "💧 Water management", "🏭 Pollution control"]
-        },
-        "berlin": {
-            "city": "Berlin",
-            "current": {"temperature": 10.5, "aqi": 50, "rainfall_mm": 570},
-            "prediction_2050": {"temperature": 14.0, "aqi": 105, "rainfall_mm": 500, "increase": 3.5},
-            "recommendations": ["🍺 Green city maintain karo", "🌳 Renewable energy", "💧 Water conservation"]
-        },
-        "moscow": {
-            "city": "Moscow",
-            "current": {"temperature": 6.0, "aqi": 75, "rainfall_mm": 707},
-            "prediction_2050": {"temperature": 10.0, "aqi": 130, "rainfall_mm": 630, "increase": 4.0},
-            "recommendations": ["🏰 Heritage protect karo", "🌳 Green cover", "❄️ Winter conserve karo"]
-        },
-        "cairo": {
-            "city": "Cairo",
-            "current": {"temperature": 28.0, "aqi": 165, "rainfall_mm": 25},
-            "prediction_2050": {"temperature": 32.0, "aqi": 230, "rainfall_mm": 20, "increase": 4.0},
-            "recommendations": ["🔺 Heritage protect karo", "💧 Water conservation critical", "🌳 Desert greening"]
-        },
-        "saopaulo": {
-            "city": "São Paulo",
-            "current": {"temperature": 20.0, "aqi": 95, "rainfall_mm": 1455},
-            "prediction_2050": {"temperature": 23.5, "aqi": 160, "rainfall_mm": 1320, "increase": 3.5},
-            "recommendations": ["🇧🇷 Amazon protect karo", "🌳 Green cover", "💧 Water management"]
-        },
-        "mexicocity": {
-            "city": "Mexico City",
-            "current": {"temperature": 17.0, "aqi": 125, "rainfall_mm": 820},
-            "prediction_2050": {"temperature": 20.5, "aqi": 190, "rainfall_mm": 740, "increase": 3.5},
-            "recommendations": ["🌮 Air quality improve karo", "🌳 Green cover", "💧 Water management"]
-        },
-        "bangkok": {
-            "city": "Bangkok",
-            "current": {"temperature": 29.5, "aqi": 115, "rainfall_mm": 1620},
-            "prediction_2050": {"temperature": 33.0, "aqi": 180, "rainfall_mm": 1480, "increase": 3.5},
-            "recommendations": ["🛕 Heritage protect karo", "💧 Flood control", "🌳 Green cover"]
-        },
-        "kualalumpur": {
-            "city": "Kuala Lumpur",
-            "current": {"temperature": 28.5, "aqi": 95, "rainfall_mm": 2530},
-            "prediction_2050": {"temperature": 32.0, "aqi": 160, "rainfall_mm": 2350, "increase": 3.5},
-            "recommendations": ["🏙️ Green buildings", "💧 Flood control", "🌳 Urban gardens"]
-        },
-        "jakarta": {
-            "city": "Jakarta",
-            "current": {"temperature": 28.0, "aqi": 135, "rainfall_mm": 1790},
-            "prediction_2050": {"temperature": 31.5, "aqi": 200, "rainfall_mm": 1630, "increase": 3.5},
-            "recommendations": ["🏝️ Coastal protection", "💧 Flood control critical", "🌳 Green cover"]
-        },
-        "manila": {
-            "city": "Manila",
-            "current": {"temperature": 28.5, "aqi": 105, "rainfall_mm": 2100},
-            "prediction_2050": {"temperature": 32.0, "aqi": 170, "rainfall_mm": 1930, "increase": 3.5},
-            "recommendations": ["🏝️ Coastal protection", "💧 Flood control", "🌳 Green cover"]
-        },
-        "karachi": {
-            "city": "Karachi",
-            "current": {"temperature": 27.5, "aqi": 195, "rainfall_mm": 250},
-            "prediction_2050": {"temperature": 31.0, "aqi": 260, "rainfall_mm": 220, "increase": 3.5},
-            "recommendations": ["🕌 Coastal protection", "💧 Water conservation", "🌳 Green cover"]
-        },
-        "dhaka": {
-            "city": "Dhaka",
-            "current": {"temperature": 26.5, "aqi": 215, "rainfall_mm": 2120},
-            "prediction_2050": {"temperature": 30.0, "aqi": 280, "rainfall_mm": 1950, "increase": 3.5},
-            "recommendations": ["🇧🇩 Flood control", "💧 Water management", "🌳 Green cover"]
-        },
-        "colombo": {
-            "city": "Colombo",
-            "current": {"temperature": 28.0, "aqi": 95, "rainfall_mm": 2330},
-            "prediction_2050": {"temperature": 31.5, "aqi": 160, "rainfall_mm": 2150, "increase": 3.5},
-            "recommendations": ["🇱🇰 Coastal protection", "💧 Water management", "🌳 Green cover"]
-        },
-        "kathmandu": {
-            "city": "Kathmandu",
-            "current": {"temperature": 18.5, "aqi": 185, "rainfall_mm": 1400},
-            "prediction_2050": {"temperature": 22.0, "aqi": 250, "rainfall_mm": 1270, "increase": 3.5},
-            "recommendations": ["🏔️ Mountains protect karo", "🌳 Green cover", "💧 Water management"]
-        },
-        "kabul": {
-            "city": "Kabul",
-            "current": {"temperature": 12.5, "aqi": 165, "rainfall_mm": 310},
-            "prediction_2050": {"temperature": 16.5, "aqi": 230, "rainfall_mm": 270, "increase": 4.0},
-            "recommendations": ["🏔️ Environment protect karo", "💧 Water conservation", "🌳 Green cover"]
-        },
-        "tehran": {
-            "city": "Tehran",
-            "current": {"temperature": 17.5, "aqi": 175, "rainfall_mm": 230},
-            "prediction_2050": {"temperature": 21.5, "aqi": 240, "rainfall_mm": 190, "increase": 4.0},
-            "recommendations": ["🕌 Air quality improve karo", "💧 Water conservation", "🌳 Green cover"]
+            "recommendations": ["Tree plantation drives", "Clean Gomti river", "Promote metro and e-rickshaws", "Control industrial pollution"]
         }
     }
     
@@ -426,27 +99,485 @@ async def get_city(city_name: str):
 async def chat(request: ChatRequest):
     message = request.message.lower()
     
-    if "lucknow" in message:
-        response = "🏙️ Lucknow ka Climate Prediction:\n\n📊 Current Temp: 25.8°C\n🔮 2050 tak: 28.5°C\n📈 Increase: +2.7°C\n\n💡 Suggestions:\n• Tree plantation badhao\n• Gomti river clean karo"
-    elif "delhi" in message:
-        response = "🏙️ Delhi ka Climate Prediction:\n\n📊 Current Temp: 26.5°C\n🔮 2050 tak: 29.8°C\n📈 Increase: +3.3°C\n\n💡 Suggestions:\n• Odd-even scheme lagao\n• Air purifiers use karo"
-    elif "mumbai" in message:
-        response = "🏙️ Mumbai ka Climate Prediction:\n\n📊 Current Temp: 28.3°C\n🔮 2050 tak: 30.5°C\n📈 Increase: +2.2°C\n\n💡 Suggestions:\n• Coastal protection karo\n• Vertical gardens lagao"
-    elif "help" in message:
-        response = "🤖 Main kaise help karu:\n\n1️⃣ City prediction: \"Lucknow temp\"\n2️⃣ Global info: \"Temperature kya hai\"\n3️⃣ Solutions: \"Kya kar sakte hain\""
-    else:
-        response = "🤔 Samajh nahi aaya bhai.\n\nTry karo:\n• \"Lucknow climate\"\n• \"Delhi temperature\"\n• \"Help\""
+    # City-specific queries
+    city_responses = {
+        "lucknow": """🏙️ **Lucknow Climate Prediction**
+
+📊 Current Temperature: 25.8°C
+🔮 2050 Projection: 28.5°C
+📈 Temperature Increase: +2.7°C
+
+⚠️ **Alert:** Temperature is rising rapidly!
+
+💡 **Recommendations:**
+• Increase tree plantation
+• Clean and conserve Gomti River
+• Promote metro and e-rickshaw usage
+• Control industrial pollution
+• Implement green building norms""",
+        
+        "delhi": """🏙️ **Delhi Climate Prediction**
+
+📊 Current Temperature: 26.5°C
+🔮 2050 Projection: 29.8°C
+📈 Temperature Increase: +3.3°C
+
+⚠️ **Critical Alert:** Highest risk among major cities! Air quality is severely degraded.
+
+💡 **Recommendations:**
+• Implement odd-even vehicle scheme regularly
+• Use air purifiers indoors
+• Increase green cover to 33%
+• Control construction dust
+• Promote public transport and metro
+• Shift to electric vehicles""",
+        
+        "mumbai": """🏙️ **Mumbai Climate Prediction**
+
+📊 Current Temperature: 28.3°C
+🔮 2050 Projection: 30.5°C
+📈 Temperature Increase: +2.2°C
+
+🌊 **Coastal Risk:** Sea level rise poses significant threat.
+
+💡 **Recommendations:**
+• Protect coastal areas and mangroves
+• Install vertical gardens on buildings
+• Improve waste management systems
+• Implement flood control measures
+• Strengthen coastal infrastructure
+• Conserve green spaces""",
+        
+        "bangalore": """🏙️ **Bangalore Climate Prediction**
+
+📊 Current Temperature: 24.5°C
+🔮 2050 Projection: 27.0°C
+📈 Temperature Increase: +2.5°C
+
+💻 **Tech City Challenge:** Rapid urbanization affecting climate.
+
+💡 **Recommendations:**
+• Conserve and restore lakes
+• Stop uncontrolled construction
+• Make rainwater harvesting mandatory
+• Transform IT city into green city
+• Promote sustainable urban planning
+• Increase urban forests""",
+        
+        "chennai": """🏙️ **Chennai Climate Prediction**
+
+📊 Current Temperature: 29.5°C
+🔮 2050 Projection: 32.0°C
+📈 Temperature Increase: +2.5°C
+
+💧 **Water Crisis:** Water scarcity is a critical concern.
+
+💡 **Recommendations:**
+• Prioritize water conservation
+• Install desalination plants
+• Enhance rainwater harvesting
+• Protect coastal infrastructure
+• Manage groundwater sustainably
+• Reduce water wastage""",
+        
+        "kolkata": """🏙️ **Kolkata Climate Prediction**
+
+📊 Current Temperature: 27.8°C
+🔮 2050 Projection: 30.2°C
+📈 Temperature Increase: +2.4°C
+
+🌊 **Flooding Risk:** Water logging and flooding increasing.
+
+💡 **Recommendations:**
+• Preserve parks and green spaces
+• Address water logging issues
+• Control industrial emissions
+• Create cycling lanes
+• Improve drainage systems
+• Protect wetlands""",
+        
+        "hyderabad": """🏙️ **Hyderabad Climate Prediction**
+
+📊 Current Temperature: 28.0°C
+🔮 2050 Projection: 30.5°C
+📈 Temperature Increase: +2.5°C
+
+🏙️ **Urban Challenge:** Balancing growth with environment.
+
+💡 **Recommendations:**
+• Increase green cover
+• Prioritize water conservation
+• Strengthen public transport
+• Protect lakes and water bodies
+• Promote sustainable development
+• Implement green building codes"""
+    }
     
-    return {"response": response, "language": "hinglish"}
+    # Check for city names
+    for city_name, response in city_responses.items():
+        if city_name in message:
+            return {"response": response, "language": "english"}
+    
+    # Temperature queries
+    if any(word in message for word in ["temp", "temperature", "hot", "heat", "warming"]):
+        return {
+            "response": """🌡️ **Global Temperature Status**
+
+📊 **Current (2024):** 15.14°C
+🔮 **2050 Projection:** 16.50°C
+📈 **Total Increase:** +1.36°C
+
+⚠️ **Paris Agreement Target:** Limit warming to 1.5°C
+
+**Current Status:** We are approaching the critical threshold!
+
+**If emissions continue unchecked:** Temperature could rise by 2-3°C by 2050, leading to catastrophic consequences.
+
+🌍 **Every 0.1°C matters!** Immediate action is essential to prevent irreversible climate change.""",
+            "language": "english"
+        }
+    
+    # Carbon emissions queries
+    elif any(word in message for word in ["carbon", "emission", "co2", "pollution", "greenhouse"]):
+        return {
+            "response": """🏭 **Carbon Emissions Crisis**
+
+📊 **Current CO₂ Levels:** 420 ppm
+📈 **Pre-industrial Level:** 280 ppm
+📊 **Increase:** +140 ppm (50% rise!)
+
+🎯 **Critical Targets:**
+• Reduce emissions by 45% by 2030
+• Achieve Carbon Neutrality by 2050
+• Net-zero emissions by 2070
+
+💡 **Solutions:**
+• Transition to renewable energy (Solar, Wind)
+• Adopt electric vehicles
+• Increase tree plantation
+• Improve energy efficiency
+• Reduce fossil fuel consumption
+• Implement carbon pricing
+
+🌱 **The time to act is NOW!**""",
+            "language": "english"
+        }
+    
+    # Future predictions
+    elif any(word in message for word in ["2050", "future", "prediction", "forecast", "will happen"]):
+        return {
+            "response": """🔮 **Climate Scenario by 2050**
+
+🌡️ **Temperature Rise:** 1.5-3°C increase
+🌊 **Sea Level Rise:** 30-50 cm
+🏙️ **Cities at Risk:** Coastal megacities
+🌾 **Food Security:** Under threat
+💧 **Water Scarcity:** Will intensify
+🔥 **Extreme Weather:** More frequent and severe
+
+⚠️ **Potential Impacts:**
+• Increased heatwaves and droughts
+• More intense storms and flooding
+• Loss of biodiversity
+• Agricultural disruption
+• Mass migration from affected areas
+• Economic losses in trillions
+
+✅ **But we can still prevent the worst:**
+• Rapid transition to renewable energy
+• Massive carbon emission reductions
+• Large-scale reforestation
+• Sustainable lifestyle changes
+• Green technology adoption
+
+**The future is in our hands!** 🌍""",
+            "language": "english"
+        }
+    
+    # Help menu
+    elif any(word in message for word in ["help", "what can", "how to", "assist"]):
+        return {
+            "response": """🤖 **How I Can Help You**
+
+**1️⃣ City Climate Predictions:**
+   • "What is the temperature in Lucknow?"
+   • "Delhi climate forecast"
+   • "Mumbai 2050 prediction"
+   • "Bangalore weather outlook"
+
+**2️⃣ Global Climate Information:**
+   • "What is the current temperature?"
+   • "How much CO2 is in the atmosphere?"
+   • "What will happen by 2050?"
+   • "Why is climate change happening?"
+
+**3️⃣ Solutions & Actions:**
+   • "What can we do?"
+   • "How to reduce carbon footprint?"
+   • "Climate solutions"
+   • "How to help the environment?"
+
+**4️⃣ Specific Topics:**
+   • "Sea level rise"
+   • "Global warming"
+   • "Air quality"
+   • "Renewable energy"
+
+**Just type your question - I'm here to help!** 😊""",
+            "language": "english"
+        }
+    
+    # Solutions
+    elif any(word in message for word in ["solution", "solve", "what can we do", "action", "prevent"]):
+        return {
+            "response": """🌱 **Climate Change Solutions**
+
+**Individual Actions:**
+✅ Use electric or public transport
+✅ Install solar panels
+✅ Reduce, reuse, recycle
+✅ Plant trees
+✅ Use energy-efficient appliances
+✅ Reduce meat consumption
+✅ Conserve water
+✅ Support sustainable products
+
+**Community Actions:**
+✅ Build green infrastructure
+✅ Implement rainwater harvesting
+✅ Adopt renewable energy
+✅ Create awareness programs
+✅ Establish community gardens
+
+**Government/Policy Actions:**
+✅ Implement carbon tax
+✅ Ban single-use plastics
+✅ Promote renewable energy
+✅ Improve public transport
+✅ Enforce emission standards
+✅ Protect forests and wetlands
+
+**Corporate Actions:**
+✅ Adopt sustainable practices
+✅ Reduce carbon footprint
+✅ Invest in green technology
+✅ Implement circular economy
+
+**Every action counts! Together we can make a difference! 🌍**""",
+            "language": "english"
+        }
+    
+    # Sea level rise
+    elif any(word in message for word in ["sea level", "ocean", "coastal", "flooding"]):
+        return {
+            "response": """🌊 **Sea Level Rise**
+
+📊 **Current Situation:**
+• Sea level has risen 8 inches since 1880
+• Rising at 3.3mm per year
+• Rate is accelerating
+
+🔮 **2050 Projection:**
+• Additional 30-50 cm rise expected
+• Could reach 1 meter by 2100
+
+🏙️ **Cities at High Risk:**
+• Mumbai, Kolkata, Chennai (India)
+• Miami, New York (USA)
+• Bangkok (Thailand)
+• Jakarta (Indonesia)
+• Venice (Italy)
+
+⚠️ **Consequences:**
+• Coastal flooding
+• Erosion of shorelines
+• Saltwater intrusion into freshwater
+• Displacement of millions
+• Loss of coastal ecosystems
+• Economic damage in billions
+
+💡 **Solutions:**
+• Build coastal defenses
+• Restore mangroves and wetlands
+• Reduce emissions
+• Planned retreat from vulnerable areas
+• Sustainable coastal development
+
+**Urgent action needed!** 🌍""",
+            "language": "english"
+        }
+    
+    # Air quality
+    elif any(word in message for word in ["air quality", "aqi", "pollution", "breathe"]):
+        return {
+            "response": """😷 **Air Quality Crisis**
+
+📊 **Current Status:**
+• 22 Indian cities in world's 30 most polluted
+• Delhi AQI regularly exceeds 300-400
+• 99% of global population breathes unhealthy air
+
+⚠️ **Health Impacts:**
+• Respiratory diseases (asthma, COPD)
+• Heart disease and stroke
+• Lung cancer
+• Reduced life expectancy
+• Children most vulnerable
+• 7 million premature deaths annually
+
+📈 **AQI Scale:**
+🟢 0-50: Good
+🟡 51-100: Moderate
+🟠 101-150: Unhealthy for Sensitive Groups
+🔴 151-200: Unhealthy
+🟣 201-300: Very Unhealthy
+⚫ 301+: Hazardous
+
+💡 **Solutions:**
+• Use air purifiers indoors
+• Wear N95 masks on high pollution days
+• Use public transport
+• Control industrial emissions
+• Increase green cover
+• Ban crop burning
+• Promote electric vehicles
+
+**Protect yourself and the planet!** 🌱""",
+            "language": "english"
+        }
+    
+    # Global warming
+    elif any(word in message for word in ["global warming", "climate change", "why"]):
+        return {
+            "response": """🌡️ **Global Warming Explained**
+
+**What is it?**
+Global warming is the long-term heating of Earth's surface due to human activities, primarily fossil fuel burning.
+
+**How much has it warmed?**
+• Since 1850: +1.2°C globally
+• India (1901-2018): +0.7°C
+• Arctic warming 2-3 times faster
+
+**Why is it happening?**
+🏭 Burning fossil fuels (coal, oil, gas)
+🌳 Deforestation and land use change
+🐄 Agriculture and livestock (methane)
+🏗️ Industrial processes
+🚗 Transportation emissions
+
+**Effects:**
+🔥 More frequent and intense heatwaves
+🌊 Melting glaciers and ice caps
+🌾 Disrupted agriculture and food security
+💧 Water scarcity
+🦠 Spread of diseases
+🌪️ Extreme weather events
+🐻 Loss of biodiversity
+
+**The Solution:**
+✅ Transition to renewable energy
+✅ Protect and restore forests
+✅ Sustainable agriculture
+✅ Green transportation
+✅ Energy efficiency
+✅ Circular economy
+
+**We must act now to secure our future!** 🌍""",
+            "language": "english"
+        }
+    
+    # Renewable energy
+    elif any(word in message for word in ["renewable", "solar", "wind", "clean energy", "green energy"]):
+        return {
+            "response": """☀️ **Renewable Energy - The Future**
+
+**Types of Renewable Energy:**
+🌞 Solar Energy - Harnessing sunlight
+🌬️ Wind Energy - Using wind turbines
+💧 Hydroelectric - Water power
+🌊 Tidal/Wave Energy - Ocean power
+🔥 Geothermal - Earth's heat
+🌱 Biomass - Organic materials
+
+**India's Renewable Energy Targets:**
+• 500 GW by 2030
+• 50% electricity from renewables by 2030
+• Net-zero emissions by 2070
+
+**Benefits:**
+✅ Zero carbon emissions
+✅ Unlimited and sustainable
+✅ Decreasing costs
+✅ Job creation
+✅ Energy independence
+✅ Improved air quality
+✅ Climate change mitigation
+
+**Challenges:**
+❌ High initial investment
+❌ Energy storage needs
+❌ Grid infrastructure upgrades
+❌ Intermittency issues
+
+**The Future:**
+Solar + Wind + Battery Storage = Clean, Reliable Energy 24/7
+
+**Renewable energy is not just the future - it's the present!** 🌍⚡""",
+            "language": "english"
+        }
+    
+    # Default response
+    else:
+        return {
+            "response": """🤔 **I'm not sure I understand.**
+
+**Here's what you can ask me:**
+
+📍 **City Predictions:**
+• "What is the climate forecast for Delhi?"
+• "Tell me about Mumbai's temperature"
+• "Bangalore 2050 prediction"
+
+🌡️ **Climate Information:**
+• "What is the current global temperature?"
+• "How much CO2 is in the atmosphere?"
+• "What will happen by 2050?"
+
+💡 **Solutions:**
+• "What can we do about climate change?"
+• "How to reduce carbon emissions?"
+• "Climate solutions"
+
+❓ **General Topics:**
+• "Sea level rise"
+• "Air quality"
+• "Global warming"
+• "Renewable energy"
+
+**Or simply type "help" for more options!**
+
+I'm here to provide accurate climate information and predictions. 😊""",
+            "language": "english"
+        }
 
 @app.get("/api/cities")
 async def get_cities():
-    return {"cities": ["lucknow", "delhi", "mumbai", "kolkata", "chennai", "bangalore"], "count": 6}
+    return {
+        "cities": ["delhi", "mumbai", "kolkata", "chennai", "bangalore", "hyderabad", "pune", "ahmedabad", "jaipur", "lucknow"],
+        "count": 10
+    }
 
 @app.get("/")
 async def root():
-    return {"message": "🌍 Climate Intelligence Hub API", "status": "Running"}
+    return {
+        "message": "🌍 Climate Intelligence Hub API",
+        "status": "Running",
+        "version": "2.0 - Professional Edition"
+    }
 
 if __name__ == "__main__":
-    print("🚀 Backend starting on http://localhost:8000")
+    print("🚀 Climate Intelligence Hub API starting...")
+    print("📊 Server running on http://localhost:8000")
+    print("🌍 Ready to serve climate data!")
     uvicorn.run(app, host="0.0.0.0", port=8000)
