@@ -1,9 +1,8 @@
-node_modules/
-build/
+.env
 __pycache__/
 *.pyc
 *.pyo
-*.env
-.DS_Store
+*.pyd
+.Python
 venv/
 ENV/
