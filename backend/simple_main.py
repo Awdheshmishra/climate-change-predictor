@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel  # Pydantic v1
+from pydantic import BaseModel
 from dotenv import load_dotenv
 from groq import Groq
 import uvicorn
@@ -29,9 +29,8 @@ if GROQ_API_KEY:
         print("🤖 Groq AI Connected Successfully! ✅")
     except Exception as e:
         print(f"❌ Groq Connection Error: {e}")
-        groq_client = None
 else:
-    print("⚠️ GROQ_API_KEY not found")
+    print("⚠️ GROQ_API_KEY not found in .env file")
 
 class ChatRequest(BaseModel):
     message: str
@@ -86,30 +85,6 @@ async def get_city(city_name: str):
             "current": {"temperature": 25.8, "aqi": 210, "rainfall_mm": 850},
             "prediction_2050": {"temperature": 28.5, "aqi": 340, "rainfall_mm": 780, "increase": 2.7},
             "recommendations": ["Tree plantation drives", "Clean Gomti river", "Promote metro and e-rickshaws", "Control industrial pollution"]
-        },
-        "hyderabad": {
-            "city": "Hyderabad",
-            "current": {"temperature": 28.0, "aqi": 175, "rainfall_mm": 850},
-            "prediction_2050": {"temperature": 30.5, "aqi": 240, "rainfall_mm": 780, "increase": 2.5},
-            "recommendations": ["Increase green cover", "Prioritize water conservation", "Strengthen public transport", "Protect lakes"]
-        },
-        "pune": {
-            "city": "Pune",
-            "current": {"temperature": 25.5, "aqi": 160, "rainfall_mm": 750},
-            "prediction_2050": {"temperature": 28.0, "aqi": 220, "rainfall_mm": 680, "increase": 2.5},
-            "recommendations": ["Tree plantation drives", "Control industrial pollution", "Promote electric vehicles", "Preserve green zones"]
-        },
-        "ahmedabad": {
-            "city": "Ahmedabad",
-            "current": {"temperature": 28.5, "aqi": 210, "rainfall_mm": 650},
-            "prediction_2050": {"temperature": 31.0, "aqi": 280, "rainfall_mm": 580, "increase": 2.5},
-            "recommendations": ["Water conservation critical", "Increase green cover", "Control industrial emissions", "Implement heat action plan"]
-        },
-        "jaipur": {
-            "city": "Jaipur",
-            "current": {"temperature": 27.5, "aqi": 195, "rainfall_mm": 550},
-            "prediction_2050": {"temperature": 30.0, "aqi": 260, "rainfall_mm": 480, "increase": 2.5},
-            "recommendations": ["Tree plantation", "Water harvesting", "Protect heritage sites", "Combat desertification"]
         }
     }
     return cities.get(city_name.lower(), cities["lucknow"])
@@ -124,52 +99,19 @@ async def chat(request: ChatRequest):
         }
     
     try:
-        # System prompt for climate assistant
-        system_prompt = """You are Climate AI Assistant, an expert climate scientist and environmental consultant.
+        system_prompt = """You are Climate AI Assistant. Answer in ENGLISH only.
 
-**YOUR KNOWLEDGE BASE:**
+Key Data:
+- Global Temp: 15.14°C (2024) → 16.50°C (2050)
+- CO₂: 420 ppm (current) vs 280 ppm (pre-industrial)
+- Delhi: 26.5°C → 29.8°C by 2050
+- Mumbai: 28.3°C → 30.5°C by 2050
+- Bangalore: 24.5°C → 27.0°C by 2050
+- Chennai: 29.5°C → 32.0°C by 2050
+- Kolkata: 27.8°C → 30.2°C by 2050
+- Lucknow: 25.8°C → 28.5°C by 2050
 
-**Global Climate Data:**
-- Current Global Temperature: 15.14°C (2024)
-- 2050 Projection: 16.50°C (+1.36°C increase)
-- Current CO₂ Levels: 420 ppm (Pre-industrial: 280 ppm)
-- Paris Agreement Target: Limit warming to 1.5°C
-
-**City-Specific Predictions:**
-- Delhi: 26.5°C → 29.8°C by 2050 (+3.3°C) - CRITICAL
-- Mumbai: 28.3°C → 30.5°C by 2050 (+2.2°C) - Coastal Risk
-- Bangalore: 24.5°C → 27.0°C by 2050 (+2.5°C) - Water Scarcity
-- Chennai: 29.5°C → 32.0°C by 2050 (+2.5°C) - Water Crisis
-- Kolkata: 27.8°C → 30.2°C by 2050 (+2.4°C) - Flooding
-- Lucknow: 25.8°C → 28.5°C by 2050 (+2.7°C) - Air Quality
-- Hyderabad: 28.0°C → 30.5°C by 2050 (+2.5°C)
-- Pune: 25.5°C → 28.0°C by 2050 (+2.5°C)
-- Ahmedabad: 28.5°C → 31.0°C by 2050 (+2.5°C) - Heat Waves
-- Jaipur: 27.5°C → 30.0°C by 2050 (+2.5°C) - Desertification
-
-**RESPONSE GUIDELINES:**
-- Always respond in ENGLISH
-- Use emojis to make responses engaging (🌍🌡️🌊🌱🏭💧🔥)
-- Provide accurate, science-based information
-- Give specific, actionable recommendations
-- Be concise but comprehensive (100-300 words)
-- Use bullet points for clarity
-- End with positive, action-oriented message
-- If unsure, admit it and suggest reliable sources (IPCC, NASA, NOAA)
-
-**TOPICS YOU CAN DISCUSS:**
-- Global warming and temperature rise
-- Carbon emissions and greenhouse gases
-- Air pollution and AQI
-- Water crisis and conservation
-- Sea level rise and coastal flooding
-- Extreme weather events
-- Renewable energy solutions
-- Deforestation and biodiversity
-- Sustainable practices
-- Climate policies and agreements
-- Green technology
-- Individual and community actions"""
+Use emojis and make it engaging. Be helpful and informative."""
 
         user_message = f"""{system_prompt}
 
@@ -177,7 +119,6 @@ User Question: {request.message}
 
 Please provide a helpful, accurate, and engaging response."""
 
-        # Generate AI response using Groq
         completion = groq_client.chat.completions.create(
             model="llama3-8b-8192",
             messages=[
@@ -215,18 +156,17 @@ Please provide a helpful, accurate, and engaging response."""
 
 📊 **Current Climate Data:**
 • Global Temperature: 15.14°C
-• 2050 Projection: 16.50°C
+• 2050 Projection: 16.50°C  
 • CO₂ Levels: 420 ppm
 
-🏙️ **City Predictions Available:**
-Delhi, Mumbai, Bangalore, Chennai, Kolkata, Lucknow, Hyderabad, Pune, Ahmedabad, Jaipur
+🏙️ **City Predictions:**
+Ask about: Delhi, Mumbai, Bangalore, Chennai, Kolkata, Lucknow
 
 💡 **Quick Climate Tips:**
 ✅ Switch to renewable energy
 ✅ Plant more trees
 ✅ Use public transport
 ✅ Reduce, reuse, recycle
-✅ Save water and energy
 
 **Please try your question again!** 🌍""",
             "language": "english",
@@ -237,8 +177,8 @@ Delhi, Mumbai, Bangalore, Chennai, Kolkata, Lucknow, Hyderabad, Pune, Ahmedabad,
 @app.get("/api/cities")
 async def get_cities():
     return {
-        "cities": ["delhi", "mumbai", "kolkata", "chennai", "bangalore", "hyderabad", "pune", "ahmedabad", "jaipur", "lucknow"],
-        "count": 10
+        "cities": ["delhi", "mumbai", "kolkata", "chennai", "bangalore", "lucknow"],
+        "count": 6
     }
 
 @app.get("/")
@@ -253,9 +193,10 @@ async def root():
     }
 
 if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))
     print("🚀 Climate Intelligence Hub API Starting...")
     print(f"🤖 AI Model: Groq Llama3 8B")
     print(f"🔑 API Key: {'Configured ✅' if GROQ_API_KEY else 'Not Found ❌'}")
-    print("📊 Server: http://localhost:8000")
+    print(f"📊 Server: http://0.0.0.0:{port}")
     print("🌍 Ready to serve climate data with AI!")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=port)
